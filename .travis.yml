@@ -13,6 +13,7 @@ sudo: false
 install:
 - echo "Build on $TRAVIS_OS_NAME for Python $TRAVIS_PYTHON_VERSION"
 - bash .ci/travis/install_python.sh
+- export PATH="$HOME/miniconda/bin:$PATH"
 - conda install conda-build anaconda-client
 script:
 - conda build --python=$TRAVIS_PYTHON_VERSION --numpy=$NUMPY_VERSION landlab
