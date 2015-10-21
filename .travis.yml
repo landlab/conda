@@ -1,0 +1,23 @@
+env:
+  matrix:
+  - TRAVIS_PYTHON_VERSION="2.6" NUMPY_VERSION="1.9"
+  - TRAVIS_PYTHON_VERSION="2.7" NUMPY_VERSION="1.9"
+  - TRAVIS_PYTHON_VERSION="2.7" NUMPY_VERSION="1.10"
+  - TRAVIS_PYTHON_VERSION="3.3" NUMPY_VERSION="1.9"
+  - TRAVIS_PYTHON_VERSION="3.4" NUMPY_VERSION="1.9"
+  - TRAVIS_PYTHON_VERSION="3.4" NUMPY_VERSION="1.10"
+os:
+- linux
+- osx
+sudo: false
+install:
+- echo "Build on $TRAVIS_OS_NAME for Python $TRAVIS_PYTHON_VERSION"
+- bash .ci/travis/install_python.sh
+- conda install conda-build anaconda-client
+script:
+- conda build --python=$TRAVIS_PYTHON_VERSION --numpy=$NUMPY_VERSION landlab
+virtualenv:
+  system_site_packages: false
+notifications:
+  slack:
+    secure: gRKbqjPgp0ZcFtecHOwjLAFbzzBr2zyFrxk7OAS/cea/9U8bLQNA0jZs3ZHtAgR53gdnFlx/GI10d/KD9XMKU55gQkO4FSvfYMK7Xzs2tfnEa5flTqQKRfjB1oJ2fmb81yshUe+xKsXBoedP7SPYv2mutMOY8srKwUcuE0yGmAw=
