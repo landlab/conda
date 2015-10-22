@@ -6,6 +6,9 @@ env:
   - TRAVIS_PYTHON_VERSION="3.3" NUMPY_VERSION="1.9"
   - TRAVIS_PYTHON_VERSION="3.4" NUMPY_VERSION="1.9"
   - TRAVIS_PYTHON_VERSION="3.4" NUMPY_VERSION="1.10"
+  global:
+  - secure: U18HK+QCNYDepxe9NwnVVSst2bCkX+jO7rqAkPjanDTXXAHhT/FM8SfjAmCGjoZ1FwbbJ3H+4PZircp1uBTLGrxrh3QvsSKKuTQWB04Eih57dUt0wk8NkYSrEIRaA1f2f6WIrOIC31B73FYBNKYD+7Il2WxbrSuR3YY3sbf7EoQjaok2XJiM3OVqgvMWHgFakkRj2fPsr5iZtKlH8mzmZgtRpyHtf/2uMfJGrOaU9/UaRZwP1TJeFD3MA6wbeHa6MRvmg257ASAnUeftOhXQObLFtIhuK6cRnFCzZMCEC9awbEEd2EuPqRmLS5Ii7+AvF6o7fL4ENftt4YJGlhk3ljMDo9tYUAl3/qVDa0LuYmm0eEs1atCywh+V9VyMtJrEZ2hkR/jasijMHK4z8UohxbrMFTOyqkr1xxtjdisqBmE1JWUFa2UuS5VCn6rBqMAFOTRZ9eddtZA2IerOECZjgcsRzN+aZvt9t/tsM85/e4EN/p8Ma8a1fd65z5Y0QmSCNBeirTkP8tONG7yfHOx7Plk7ocYeIIIKrOHUaq3KPteidkWAPpbpTxtzH9IlWMvzF9iYov5BVv4Y/+e6FgIJdeia1RgjbJ1Xcxl6JpVjW+8fiMJA54p2EjrYL1PuhniXYB9Jj2NJw42XY06N7Qcfm4H1KPZagSrWEeENCl8IjBk=
+  - secure: c6KMz/oWB+jvBub96eqoB2G5q74NVPLeV1Gzvpmp1uCBGYb1K+jqnmAeBD+BCDCA16gXi2We/qB++A2YYXwS0ma611l1iihvmE3ZsQ6aeRVLA05CjLaGx7EQku9vMmr/h2VNHEgmfzUC+6jZR+39xpVn5rqK6XcOuwIb2e/UM31zEsuVXlq40ghhB4x230wVFkuvuIvbFXrx2B3GZNFWO5Pn0/XauI3f6mFFBpDJm4bkafmLxfLzct6D0d/vaE2FHgIeShVSg0b3qJLMq2r3/Oyw+U9n1ZkNz0wW/sCUJNgbJUd/q9wdDu7lQOp5OnGJ2vORolkh94ClGZuDoZ4FI83TAtdot8XdCVrDwz/5FUHpRDxSCc0tlqe94bAhv+UgFCrmq15Z7E2lM3ZrWRPMbp0grsEWzAJ9AfonYwFLrJgTHK3nH+4sfOaumoVxR+FN1xvTastUVnBCZB4QBRjyCi6Beq7+99T8O5asOxhR6EPxV+igs8TLCz6lm0st6QEVzBxEi2j3qAaeXnS1yuVAfDWlqSHZtqH59ypdLdWnKmNxmNo0axGlSBOnbrJ7r+bBCg/VALA7Ccd4cSw5Yk8bfvyB0vAz1fPgF8bvcsyZiqgWKheWNz04LiEV9HvnigmJyOEYqnc7MMNTnrmSR8Mu2PTXoEb7NvPeBQVQUOTWanA=
 os:
 - linux
 - osx
@@ -21,6 +24,12 @@ install:
 - conda install conda-build anaconda-client
 script:
 - conda build --python=$TRAVIS_PYTHON_VERSION --numpy=$NUMPY_VERSION landlab
+- export CONDA_PACKAGE_FILE=$(conda build --output landlab)
+deploy:
+  provider: script
+  script: .ci/travis/deploy_to_anaconda.sh
+  on:
+    branch: master
 virtualenv:
   system_site_packages: false
 notifications:
