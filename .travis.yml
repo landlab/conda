@@ -24,7 +24,7 @@ install:
 - conda install conda-build anaconda-client
 script:
 - conda build --python=$TRAVIS_PYTHON_VERSION --numpy=$NUMPY_VERSION landlab
-- export CONDA_PACKAGE_FILE=$(conda build --output landlab)
+- export CONDA_PACKAGE_FILE=$(conda build --output --python=$TRAVIS_PYTHON_VERSION --numpy=$NUMPY_VERSION landlab)
 deploy:
   provider: script
   skip_cleanup: true
