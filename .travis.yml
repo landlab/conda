@@ -27,6 +27,7 @@ script:
 - export CONDA_PACKAGE_FILE=$(conda build --output landlab)
 deploy:
   provider: script
+  skip_cleanup: true
   script: .ci/travis/deploy_to_anaconda.sh
   on:
     branch: master
